@@ -4,7 +4,7 @@ docker run -ti --rm --add-host=docker-host:$(ifconfig docker0 | grep 'inet addr'
 
 docker build -t wpsoworks .
 
-docker run -ti --rm --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS --volume=/home/ivan/dev/COM:/home/wpsoworks/COM --hostname=pvmasworks001 -p 10091:10091 wpsoworks:latest
+docker run -ti --rm --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS --volume=/home/ivan/dev/COM:/home/wpsoworks/COM --hostname=pvmasworks001 -p 10091:10091 --add-host=apu:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') wpsoworks:latest
 
 su - wpsoworks
 ./COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.RENDICONTAZIONE.conf -P /home/wpsoworks/WPSOWORKS/etc/profile.sh start
