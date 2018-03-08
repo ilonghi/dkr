@@ -1,0 +1,30 @@
+
+
+docker run -ti --rm --add-host=docker-host:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') ilonghi/perl:1.0.0
+
+docker build -t wpsoworks .
+
+docker run -ti --rm --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS --volume=/home/ivan/dev/COM:/home/wpsoworks/COM --hostname=pvmasworks001 -p 10091:10091 wpsoworks:latest
+
+su - wpsoworks
+./COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.RENDICONTAZIONE.conf -P /home/wpsoworks/WPSOWORKS/etc/profile.sh start
+tail -f /home/wpsoworks/WPSOWORKS/var/apache/logs/RENDICONTAZIONE/pvmasworks001/*
+
+/home/wpsoworks/.api.art.conf
+modificare remote_ip con client_ip
+1  ll
+2  su - wpsoworks
+3  vi /usr/local/lib/perl5/site_perl/5.26.1/x86_64-linux-thread-multi/Apache2/Connection.pm
+4  vi /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/CGI.pm
+5  cp /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/CGI.pm /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/CGI.pm.bkp
+6  vi /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/CGI.pm
+7  vi /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/StateManager.pm
+8  cp /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/StateManager.pm /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/StateManager.pm.bkp
+9  fg
+10  history
+
+sed -i.bkp 's/->remote_ip/->client_ip/g' /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/StateManager.pm
+sed -i.bkp 's/->remote_ip/->client_ip/g' /usr/local/lib/perl5/site_perl/5.26.1/Apache/ASP/CGI.pm
+
+
+wget http://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
