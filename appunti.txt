@@ -4,7 +4,27 @@ docker run -ti --rm --add-host=docker-host:$(ifconfig docker0 | grep 'inet addr'
 
 docker build -t wpsoworks .
 
-docker run -ti --rm --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS --volume=/home/ivan/dev/COM:/home/wpsoworks/COM --hostname=pvmasworks001 -p 10091:10091 --add-host=apu:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') wpsoworks:latest
+docker run -ti --rm \
+  --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS \
+  --volume=/home/ivan/dev/COM:/home/wpsoworks/COM \
+  --volume=/home/ivan/dev/docker/wpsoworks/fs_repo_wpsoworks/var:/home/wpsoworks/WPSOWORKS/var \
+  --hostname=wpsoworks-web-rendicontazione-01 \
+  -p 10080:10080 \
+  -p 10090:10090 \
+  -p 10091:10091 \
+  --add-host=dbserver:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') \
+  wpsoworks:latest
+
+docker run -d \
+  --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS \
+  --volume=/home/ivan/dev/COM:/home/wpsoworks/COM \
+  --volume=/home/ivan/dev/docker/wpsoworks/fs_repo_wpsoworks/var:/home/wpsoworks/WPSOWORKS/var \
+  --hostname=wpsoworks-web-rendicontazione-01 \
+  -p 10091:10091 \
+  --add-host=dbserver:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') \
+  --name=wpsoworks-web-rendicontazione-01 \
+  wpsoworks:latest \
+  /home/wpsoworks/COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.RENDICONTAZIONE.conf -F start
 
 su - wpsoworks
 ./COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.RENDICONTAZIONE.conf -P /home/wpsoworks/WPSOWORKS/etc/profile.sh start
