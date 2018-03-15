@@ -26,7 +26,29 @@ docker run -d \
   wpsoworks:latest \
   /home/wpsoworks/COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.RENDICONTAZIONE.conf -F start
 
+docker run -d \
+  --volume=/home/ivan/dev/orchestrator-enel-works:/home/wpsoworks/WPSOWORKS \
+  --volume=/home/ivan/dev/COM:/home/wpsoworks/COM \
+  --volume=/home/ivan/dev/docker/wpsoworks/fs_repo_wpsoworks/var:/home/wpsoworks/WPSOWORKS/var \
+  --hostname=wpsoworks-web-wsart-01 \
+  --network=wpso-net \
+  -p 10080:10080 \
+  --add-host=dbserver:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') \
+  --name=wpsoworks-web-wsart-01 \
+  wpsoworks:latest \
+  /home/wpsoworks/COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.WSART.conf -F start
+
+docker run --name wpso-memcached -p 11211:11211 -d memcached:1.5.6-alpine
+docker run -d \
+  --hostname=wpso-memcached \
+  --network=wpso-net \
+  --name wpso-memcached \
+  memcached:1.5.6-alpine
+
+perl crea_JWT.pl -e 0 84c31cc0eddc6a121f3507c23d2cf5cd sinfo sinfo123
+
 su - wpsoworks
+. .bash_profile
 ./COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.RENDICONTAZIONE.conf -P /home/wpsoworks/WPSOWORKS/etc/profile.sh start
 tail -f /home/wpsoworks/WPSOWORKS/var/apache/logs/RENDICONTAZIONE/pvmasworks001/*
 

@@ -51,6 +51,10 @@ RUN cpanm \
 
 RUN cpanm Cache::Memcached
 
+RUN cpanm MIME::Base32
+
+RUN cpanm Log::Dispatch::Screen
+
 USER wpsoworks
 
 EXPOSE 10080 10090 10091
