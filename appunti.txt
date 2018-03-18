@@ -38,12 +38,20 @@ docker run -d \
   wpsoworks:latest \
   /home/wpsoworks/COM/bin/apachectl.sh -C /home/wpsoworks/WPSOWORKS/etc/httpd.WSART.conf -F start
 
-docker run --name wpso-memcached -p 11211:11211 -d memcached:1.5.6-alpine
 docker run -d \
   --hostname=wpso-memcached \
   --network=wpso-net \
   --name wpso-memcached \
   memcached:1.5.6-alpine
+
+docker run -d \
+  -v /home/ivan/dev/u01/app/oracle:/u01/app/oracle \
+  -p 8080:8080 \
+  -p 1521:1521 \
+  --network=wpso-net \
+  --hostname=oracle-server \
+  --name=oracle-server \
+  sath89/oracle-12c
 
 perl crea_JWT.pl -e 0 84c31cc0eddc6a121f3507c23d2cf5cd sinfo sinfo123
 
