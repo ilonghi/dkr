@@ -28,33 +28,6 @@ RUN ln -s WPSOWORKS/etc && chown -h wpsoworks:web etc && \
     ln -s COM/share/www/ARTLEGACY ARTNEW && chown -h wpsoworks:web ARTNEW && \
     ln -s ARTNEW ART && chown -h wpsoworks:web ART
 
-RUN cpanm \
-      Date::Calc \
-      Text::Wrapper \
-      Spreadsheet::WriteExcel \
-      File::CacheDir \
-      Text::Autoformat \
-      Text::CSV_XS
-
-RUN cpanm \
-      MIME::Lite
-
-RUN cpanm \
-      Config::Simple
-
-#RUN yum -y install clamav-server
-
-#RUN cpanm \
-    #-v File::Scan::ClamAV
-
-# RUN yum -y install libc-client
-
-RUN cpanm Cache::Memcached
-
-RUN cpanm MIME::Base32
-
-RUN cpanm Log::Dispatch::Screen
-
 USER wpsoworks
 
 EXPOSE 10080 10090 10091

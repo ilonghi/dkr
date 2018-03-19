@@ -1,5 +1,5 @@
 # Image with perl 5.26.1, DBD::Oracle 1.74 and Dancer2 0.160000
-# docker build -t ilonghi/perl:1.1.0 .
+# docker build -t ilonghi/perl:1.0.0 .
 
 FROM ilonghi/oracleclient:1.0.0
 
@@ -37,19 +37,7 @@ RUN cpanm \
       REST::Client \
       Crypt::JWT \
       Excel::Writer::XLSX \
-      Text::CSV::Encoded \
-      Date::Calc \
-      Text::Wrapper \
-      Spreadsheet::WriteExcel \
-      Text::Autoformat \
-      Text::CSV_XS \
-      MIME::Lite \
-      Config::Simple \
-      Cache::Memcached \
-      MIME::Base32 \
-      Log::Dispatch::Screen
-
-#      File::CacheDir \
+      Text::CSV::Encoded
 
 RUN curl -SL https://cpan.metacpan.org/authors/id/P/PY/PYTHIAN/DBD-Oracle-1.74.tar.gz -o DBD-Oracle-1.74.tar.gz && \
     tar zxf DBD-Oracle-1.74.tar.gz && \
@@ -63,9 +51,5 @@ RUN curl -SL https://cpan.metacpan.org/authors/id/P/PY/PYTHIAN/DBD-Oracle-1.74.t
 
 RUN cpanm --installdeps Dancer2@0.160000 && \
     cpanm --notest Dancer2@0.160000
-
-# FIXME
-# RUN yum -y install clamav-server
-# RUN cpanm File::Scan::ClamAV
 
 WORKDIR /

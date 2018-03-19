@@ -1,7 +1,7 @@
 # Image with httpd 2.4.29 and mod_perl 2.0.10 (DSO)
-# docker build -t ilonghi/httpd-mod_perl:1.1.0 .
+# docker build -t ilonghi/httpd-mod_perl:1.0.0 .
 
-FROM ilonghi/perl:1.1.0
+FROM ilonghi/perl:1.0.0
 
 RUN yum -y update && \
     yum -y install \
