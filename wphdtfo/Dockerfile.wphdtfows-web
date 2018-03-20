@@ -1,0 +1,35 @@
+# docker build -f Dockerfile.wphdtfows-web -t ilonghi/wphdtfows-web:0.0.1 .
+
+FROM ilonghi/httpd-mod_perl:1.1.0
+
+RUN yum -y update && \
+    yum -y install \
+      which
+
+COPY ./tnsnames.ora /usr/lib/oracle/12.2/client64/network/admin/tnsnames.ora
+
+RUN groupadd -g 1000 web && \
+    useradd -u 1000 -g web wphdtfows
+
+COPY ./bash_profile /home/wphdtfows/.bash_profile
+
+COPY ./api.art.conf /home/wphdtfows/.api.art.conf
+
+RUN chown wphdtfows:web /home/wphdtfows/.bash_profile && \
+    chown wphdtfows:web /home/wphdtfows/.api.art.conf
+
+WORKDIR /home/wphdtfows
+
+RUN ln -s WPHDTFO/etc && chown -h wphdtfows:web etc && \
+    ln -s WPHDTFO/share && chown -h wphdtfows:web share && \
+    ln -s WPHDTFO/bin && chown -h wphdtfows:web bin && \
+    ln -s WPHDTFO/tmp && chown -h wphdtfows:web tmp && \
+    ln -s WPHDTFO/var && chown -h wphdtfows:web var && \
+    ln -s COM/share/www/ARTLEGACY ARTNEW && chown -h wphdtfows:web ARTNEW && \
+    ln -s ARTNEW ART && chown -h wphdtfows:web ART
+
+USER wphdtfows
+
+EXPOSE 10090 10091 10092 10093
+
+WORKDIR /home/wphdtfows

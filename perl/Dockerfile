@@ -47,9 +47,9 @@ RUN cpanm \
       Config::Simple \
       Cache::Memcached \
       MIME::Base32 \
-      Log::Dispatch::Screen
-
-#      File::CacheDir \
+      Log::Dispatch::Screen \
+      CGI \
+      File::CacheDir
 
 RUN curl -SL https://cpan.metacpan.org/authors/id/P/PY/PYTHIAN/DBD-Oracle-1.74.tar.gz -o DBD-Oracle-1.74.tar.gz && \
     tar zxf DBD-Oracle-1.74.tar.gz && \

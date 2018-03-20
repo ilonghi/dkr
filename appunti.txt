@@ -1,4 +1,4 @@
-
+docker network create wpso-net
 
 docker run -ti --rm --add-host=docker-host:$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/') ilonghi/perl:1.0.0
 
@@ -48,10 +48,11 @@ docker run -d \
   -v /home/ivan/dev/u01/app/oracle:/u01/app/oracle \
   -p 8080:8080 \
   -p 1521:1521 \
-  --network=wpso-net \
   --hostname=oracle-server \
   --name=oracle-server \
   sath89/oracle-12c
+
+docker network connect wpso-net oracle-server
 
 perl crea_JWT.pl -e 0 84c31cc0eddc6a121f3507c23d2cf5cd sinfo sinfo123
 
