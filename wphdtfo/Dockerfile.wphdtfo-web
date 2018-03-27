@@ -1,0 +1,25 @@
+# docker build -f Dockerfile.wphdtfo-web -t ilonghi/wphdtfo-web:0.0.1 .
+
+FROM ilonghi/httpd:1.0.0
+
+RUN yum -y update && \
+    yum -y install \
+      which
+
+RUN groupadd -g 1000 web && \
+    useradd -u 1000 -g web wphdtfo
+
+COPY ./bash_profile /home/wphdtfo/.bash_profile
+
+RUN chown wphdtfo:web /home/wphdtfo/.bash_profile
+
+WORKDIR /home/wphdtfo
+
+RUN ln -s WPHDTFOUI/etc && chown -h wphdtfo:web etc && \
+    ln -s WPHDTFOUI/var && chown -h wphdtfo:web var
+
+USER wphdtfo
+
+EXPOSE 10091
+
+WORKDIR /home/wphdtfo

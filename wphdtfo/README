@@ -16,3 +16,37 @@ docker run -ti --rm \
   --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
   --network=hdtfo-net \
   ilonghi/wphdtfows-web:0.0.1
+
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-wsart-01 \
+  --network=hdtfo-net \
+  -p 10093:10093 \
+  --name=wphdtfows-web-wsart-01 \
+  ilonghi/wphdtfows-web:0.0.1 \
+  /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf -F start
+
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI \
+  --volume=/home/ivan/dev/COM:/home/wphdtfo/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var \
+  --hostname=wphdtfo-web-restart-01 \
+  --network=hdtfo-net \
+  -p 10091:10091 \
+  --name=wphdtfo-web-restart-01 \
+  ilonghi/wphdtfo-web:0.0.1 \
+  /home/wphdtfo/COM/bin/apachectl.sh -C /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf -F start
+
+
+
+
+
+
+
+
+
+
+
+http://tvmasXXX.ict.sirti.net:YYYYY/wphdtfoivr/create/TT.html?TIPO_LINEA=3&TIPO_INTERVENTO=1&TELEFONO_RICHIEDENTE=0123131&TELEFONO_ALTERNATIVO=0123134&ID_AMELIA=123112
