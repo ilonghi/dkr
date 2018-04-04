@@ -1,4 +1,4 @@
-# docker build -f Dockerfile.wphdtfo-web -t ilonghi/wphdtfo-web:0.0.1 .
+# docker build -f Dockerfile.wphdtfoui-web -t ilonghi/wphdtfoui-web:0.0.1 .
 
 FROM ilonghi/httpd:1.0.0
 

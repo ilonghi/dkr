@@ -1,11 +1,11 @@
-docker network create hdtfo-net
+docker network create wphdtfo-net
 
-docker network connect hdtfo-net oracle-server
+docker network connect wphdtfo-net oracle-server
 
 docker run -d \
-  --hostname=hdtfo-memcached \
-  --network=hdtfo-net \
-  --name hdtfo-memcached \
+  --hostname=wphdtfo-memcached \
+  --network=wphdtfo-net \
+  --name wphdtfo-memcached \
   memcached:1.5.6-alpine
 
 docker build -f Dockerfile.wphdtfows-web -t ilonghi/wphdtfows-web:0.0.1 .
@@ -14,7 +14,7 @@ docker run -ti --rm \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
   --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
-  --network=hdtfo-net \
+  --network=wphdtfo-net \
   ilonghi/wphdtfows-web:0.0.1
 
 docker run -d \
@@ -22,9 +22,18 @@ docker run -d \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
   --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
   --hostname=wphdtfows-web-wsart-01 \
-  --network=hdtfo-net \
-  -p 10093:10093 \
+  --network=wphdtfo-net \
   --name=wphdtfows-web-wsart-01 \
+  ilonghi/wphdtfows-web:0.0.1 \
+  /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf -F start
+
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-wsart-02 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-web-wsart-02 \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf -F start
 
@@ -32,21 +41,184 @@ docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI \
   --volume=/home/ivan/dev/COM:/home/wphdtfo/COM \
   --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var \
-  --hostname=wphdtfo-web-restart-01 \
-  --network=hdtfo-net \
-  -p 10091:10091 \
-  --name=wphdtfo-web-restart-01 \
-  ilonghi/wphdtfo-web:0.0.1 \
+  --hostname=wphdtfoui-web-restart-01 \
+  --network=wphdtfo-net \
+  --name=wphdtfoui-web-restart-01 \
+  ilonghi/wphdtfoui-web:0.0.1 \
   /home/wphdtfo/COM/bin/apachectl.sh -C /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf -F start
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI \
+  --volume=/home/ivan/dev/COM:/home/wphdtfo/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var \
+  --hostname=wphdtfoui-web-restart-02 \
+  --network=wphdtfo-net \
+  --name=wphdtfoui-web-restart-02 \
+  ilonghi/wphdtfoui-web:0.0.1 \
+  /home/wphdtfo/COM/bin/apachectl.sh -C /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf -F start
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-ivr-01 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-web-ivr-01 \
+  ilonghi/wphdtfows-web:0.0.1 \
+  /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.IVR.conf -F start
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-ivr-02 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-web-ivr-02 \
+  ilonghi/wphdtfows-web:0.0.1 \
+  /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.IVR.conf -F start
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-artlegacy-01 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-web-artlegacy-01 \
+  ilonghi/wphdtfows-web:0.0.1 \
+  /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf -F start
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-artlegacy-02 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-web-artlegacy-02 \
+  ilonghi/wphdtfows-web:0.0.1 \
+  /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf -F start
 
+# FIXME: abilitare ssl
+docker run -d \
+  --network=wphdtfo-net \
+  --hostname=wphdtfo-web-proxy \
+  -p 80:80 \
+  --name=wphdtfo-web-proxy \
+  --volume=/home/ivan/dev/docker/wphdtfo/wphdtfo-web-proxy/httpd_conf_custom:/usr/local/apache/conf/custom \
+  ilonghi/wphdtfo-web-proxy:0.0.1 \
+  httpd-foreground
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-wsart-01 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-oss-sau-01 \
+  ilonghi/wphdtfows-oss:0.0.1 \
+  /bin/bash -c "source ~/.bash_profile; session_audit_upload.sh -n"
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-web-wsart-02 \
+  --network=wphdtfo-net \
+  --name=wphdtfows-oss-sau-01
+  docker sart wphdtfows-oss-sau-02 \
+  ilonghi/wphdtfows-oss:0.0.1 \
+  /bin/bash -c "source ~/.bash_profile; session_audit_upload.sh -n"
 
+docker run -d \
+  --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
+  --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
+  --volume=/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var \
+  --hostname=wphdtfows-oss \
+  --network=wphdtfo-net \
+  --name=wphdtfows-oss-daemon-um \
+  ilonghi/wphdtfows-oss:0.0.1 \
+  /bin/bash -c 'source ~/.bash_profile; exec users_management --log-config=${COM}/etc/users_management.log4perl.conf --driver=API::ART::Driver::Users::JSON --oFile=${ETC}/users.json --camelize-names --manage=C --manage=U --manage=D --notify-email=${MAILADDR_BG} --daemon=30 --transaction-mode=c'
 
+### CRONTAB
+### invio SIGHUP al demone users_management per far riaprire i file di log con la data corrente
+00 00 * * * docker kill -s HUP wphdtfows-oss-daemon-um
+### report giornaliero accessi con caricamento via ftp su sistema aziendale per audit
+07 00 * * * docker start wphdtfows-oss-sau-01
+07 00 * * * docker start wphdtfows-oss-sau-02
 
-http://tvmasXXX.ict.sirti.net:YYYYY/wphdtfoivr/create/TT.html?TIPO_LINEA=3&TIPO_INTERVENTO=1&TELEFONO_RICHIEDENTE=0123131&TELEFONO_ALTERNATIVO=0123134&ID_AMELIA=123112
+# http://localhost/wphdtfoivr/create/TT.html?TIPO_LINEA=3&TIPO_INTERVENTO=1&TELEFONO_RICHIEDENTE=0123131&TELEFONO_ALTERNATIVO=0123134&ID_AMELIA=123112
+
+### Directory da creare
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/logs
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/logs/RESTART
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/logs/RESTART/wphdtfoui-web-restart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/logs/RESTART/wphdtfoui-web-restart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/lock
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/lock/wphdtfoui-web-restart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var/apache/lock/wphdtfoui-web-restart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/logs
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/ARTLEGACY
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/IVR
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-web-artlegacy-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-web-wsart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-oss
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-web-wsart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-web-ivr-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-web-ivr-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/session/WSART/wphdtfows-web-artlegacy-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-web-artlegacy-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-web-wsart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-oss
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-web-wsart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-web-ivr-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-web-ivr-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/RESTART/wphdtfows-web-artlegacy-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-web-artlegacy-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-web-wsart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-oss
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-web-wsart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-web-ivr-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-web-ivr-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/ARTLEGACY/wphdtfows-web-artlegacy-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-web-artlegacy-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-web-wsart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-oss
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-web-wsart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-web-ivr-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-web-ivr-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/IVR/wphdtfows-web-artlegacy-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-web-artlegacy-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-web-wsart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-oss
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-web-wsart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-web-ivr-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-web-ivr-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/logs/WSART/wphdtfows-web-artlegacy-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-web-artlegacy-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-web-wsart-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-oss
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-web-wsart-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-web-ivr-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-web-ivr-01
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/apache/lock/wphdtfows-web-artlegacy-02
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/art_repository
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/art_repository/email
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/art_repository/tmp
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/art_repository/tmp/tmpfiles
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/repository
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/repository/session_audit
+/home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var/lock

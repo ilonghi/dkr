@@ -1,0 +1,20 @@
+# docker build -f Dockerfile.wphdtfo-web-proxy -t ilonghi/wphdtfo-web-proxy:0.0.1 .
+
+FROM ilonghi/httpd:1.0.0
+
+# FIXME: abilitare ssl
+
+RUN sed -ri \
+  -e 's!^(\s*CustomLog)\s+\S+!\1 /proc/self/fd/1!g' \
+  -e 's!^(\s*ErrorLog)\s+\S+!\1 /proc/self/fd/2!g' \
+  /usr/local/apache/conf/httpd.conf && \
+  echo >> /usr/local/apache/conf/httpd.conf && \
+  echo 'Include conf/custom/*.conf' >> /usr/local/apache/conf/httpd.conf && \
+  echo >> /usr/local/apache/conf/httpd.conf
+
+COPY httpd-foreground /usr/local/bin/
+RUN chmod +x /usr/local/bin/httpd-foreground
+
+EXPOSE 80 443
+
+# CMD ["httpd-foreground"]

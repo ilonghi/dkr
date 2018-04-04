@@ -10,6 +10,8 @@ RUN yum -y update && \
       openssl \
       openssl-devel
 
+# FIXME: installare mutt
+
 WORKDIR /usr/local/src
 
 RUN curl -SL http://www.cpan.org/src/5.0/perl-5.26.1.tar.gz -o perl-5.26.1.tar.gz && \
