@@ -1,0 +1,24 @@
+version: '3.6'
+services:
+  wphdtfows-oss-daemon-um:
+    build:
+      dockerfile: Dockerfile.wphdtfows-oss
+      context: .
+    image: ilonghi/wphdtfows-oss:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-oss
+    container_name: wphdtfows-oss-daemon-um
+    networks:
+      - wphdtfo-net
+    command:
+      - /bin/bash
+      - -c
+      - source ~/.bash_profile; exec users_management --log-config=$${COM}/etc/users_management.log4perl.conf --driver=API::ART::Driver::Users::JSON --oFile=$${ETC}/users.json --camelize-names --manage=C --manage=U --manage=D --notify-email=$${MAILADDR_BG} --daemon=30 --transaction-mode=c
+
+networks:
+  wphdtfo-net:
+    external:
+      name: wphdtfo-net

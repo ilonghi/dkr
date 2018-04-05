@@ -2,9 +2,11 @@
 
 FROM ilonghi/perl:1.1.0
 
+# FIXME: mutt va spostato in un'immagine precedente
 RUN yum -y update && \
     yum -y install \
-      which
+      which \
+      mutt
 
 COPY ./tnsnames.ora /usr/lib/oracle/12.2/client64/network/admin/tnsnames.ora
 

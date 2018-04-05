@@ -107,6 +107,7 @@ docker run -d \
   ilonghi/wphdtfo-web-proxy:0.0.1 \
   httpd-foreground
 
+# in docker-compose-no-daemon.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -117,6 +118,7 @@ docker run -d \
   ilonghi/wphdtfows-oss:0.0.1 \
   /bin/bash -c "source ~/.bash_profile; session_audit_upload.sh -n"
 
+# in docker-compose-no-daemon.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -128,6 +130,7 @@ docker run -d \
   ilonghi/wphdtfows-oss:0.0.1 \
   /bin/bash -c "source ~/.bash_profile; session_audit_upload.sh -n"
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
