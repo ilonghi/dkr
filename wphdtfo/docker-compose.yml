@@ -1,5 +1,179 @@
 version: '3.6'
 services:
+  wphdtfo-memcached:
+    image: memcached:1.5.6-alpine
+    hostname: wphdtfo-memcached
+    container_name: wphdtfo-memcached
+    networks:
+      - wphdtfo-net
+  wphdtfo-web-proxy:
+    image: ilonghi/wphdtfo-web-proxy:0.0.1
+    volumes:
+      - /home/ivan/dev/docker/wphdtfo/wphdtfo-web-proxy/httpd_conf_custom:/usr/local/apache/conf/custom
+    ports:
+      - 80:80
+    hostname: wphdtfo-web-proxy
+    container_name: wphdtfo-web-proxy
+    networks:
+      - wphdtfo-net
+    command:
+      httpd-foreground
+  wphdtfows-web-wsart-01:
+    build:
+      dockerfile: Dockerfile.wphdtfows-web
+      context: .
+    image: ilonghi/wphdtfows-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-web-wsart-01
+    container_name: wphdtfows-web-wsart-01
+    networks:
+      - wphdtfo-net
+    depends_on:
+      - wphdtfo-memcached
+    command:
+      - /home/wphdtfows/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf
+      - -F
+      - start
+  wphdtfows-web-wsart-02:
+    build:
+      dockerfile: Dockerfile.wphdtfows-web
+      context: .
+    image: ilonghi/wphdtfows-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-web-wsart-02
+    container_name: wphdtfows-web-wsart-02
+    networks:
+      - wphdtfo-net
+    depends_on:
+      - wphdtfo-memcached
+    command:
+      - /home/wphdtfows/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf
+      - -F
+      - start
+  wphdtfoui-web-restart-01:
+    build:
+      dockerfile: Dockerfile.wphdtfoui-web
+      context: .
+    image: ilonghi/wphdtfoui-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI
+      - /home/ivan/dev/COM:/home/wphdtfo/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var
+    hostname: wphdtfoui-web-restart-01
+    container_name: wphdtfoui-web-restart-01
+    networks:
+      - wphdtfo-net
+    command:
+      - /home/wphdtfo/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf
+      - -F
+      - start
+  wphdtfoui-web-restart-02:
+    build:
+      dockerfile: Dockerfile.wphdtfoui-web
+      context: .
+    image: ilonghi/wphdtfoui-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI
+      - /home/ivan/dev/COM:/home/wphdtfo/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var
+    hostname: wphdtfoui-web-restart-02
+    container_name: wphdtfoui-web-restart-02
+    networks:
+      - wphdtfo-net
+    command:
+      - /home/wphdtfo/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf
+      - -F
+      - start
+  wphdtfows-web-ivr-01:
+    build:
+      dockerfile: Dockerfile.wphdtfows-web
+      context: .
+    image: ilonghi/wphdtfows-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-web-ivr-01
+    container_name: wphdtfows-web-ivr-01
+    networks:
+      - wphdtfo-net
+    command:
+      - /home/wphdtfows/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfows/WPHDTFO/etc/httpd.IVR.conf
+      - -F
+      - start
+  wphdtfows-web-ivr-02:
+    build:
+      dockerfile: Dockerfile.wphdtfows-web
+      context: .
+    image: ilonghi/wphdtfows-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-web-ivr-02
+    container_name: wphdtfows-web-ivr-02
+    networks:
+      - wphdtfo-net
+    command:
+      - /home/wphdtfows/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfows/WPHDTFO/etc/httpd.IVR.conf
+      - -F
+      - start
+  wphdtfows-web-artlegacy-01:
+    build:
+      dockerfile: Dockerfile.wphdtfows-web
+      context: .
+    image: ilonghi/wphdtfows-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-web-artlegacy-01
+    container_name: wphdtfows-web-artlegacy-01
+    networks:
+      - wphdtfo-net
+    command:
+      - /home/wphdtfows/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf
+      - -F
+      - start
+  wphdtfows-web-artlegacy-02:
+    build:
+      dockerfile: Dockerfile.wphdtfows-web
+      context: .
+    image: ilonghi/wphdtfows-web:0.0.1
+    volumes:
+      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
+      - /home/ivan/dev/COM:/home/wphdtfows/COM
+      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+    hostname: wphdtfows-web-artlegacy-02
+    container_name: wphdtfows-web-artlegacy-02
+    networks:
+      - wphdtfo-net
+    command:
+      - /home/wphdtfows/COM/bin/apachectl.sh
+      - -C
+      - /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf
+      - -F
+      - start
   wphdtfows-oss-daemon-um:
     build:
       dockerfile: Dockerfile.wphdtfows-oss

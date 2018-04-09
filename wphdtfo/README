@@ -2,6 +2,7 @@ docker network create wphdtfo-net
 
 docker network connect wphdtfo-net oracle-server
 
+# in docker-compose.yml
 docker run -d \
   --hostname=wphdtfo-memcached \
   --network=wphdtfo-net \
@@ -17,6 +18,7 @@ docker run -ti --rm \
   --network=wphdtfo-net \
   ilonghi/wphdtfows-web:0.0.1
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -27,6 +29,7 @@ docker run -d \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -37,6 +40,7 @@ docker run -d \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.WSART.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI \
   --volume=/home/ivan/dev/COM:/home/wphdtfo/COM \
@@ -47,6 +51,7 @@ docker run -d \
   ilonghi/wphdtfoui-web:0.0.1 \
   /home/wphdtfo/COM/bin/apachectl.sh -C /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI \
   --volume=/home/ivan/dev/COM:/home/wphdtfo/COM \
@@ -57,6 +62,7 @@ docker run -d \
   ilonghi/wphdtfoui-web:0.0.1 \
   /home/wphdtfo/COM/bin/apachectl.sh -C /home/wphdtfo/WPHDTFOUI/etc/httpd.RESTART.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -67,6 +73,7 @@ docker run -d \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.IVR.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -77,6 +84,7 @@ docker run -d \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.IVR.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -87,6 +95,7 @@ docker run -d \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf -F start
 
+# in docker-compose.yml
 docker run -d \
   --volume=/home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO \
   --volume=/home/ivan/dev/COM:/home/wphdtfows/COM \
@@ -97,6 +106,7 @@ docker run -d \
   ilonghi/wphdtfows-web:0.0.1 \
   /home/wphdtfows/COM/bin/apachectl.sh -C /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf -F start
 
+# in docker-compose.yml
 # FIXME: abilitare ssl
 docker run -d \
   --network=wphdtfo-net \
