@@ -15,11 +15,16 @@ RUN chown wphdtfo:web /home/wphdtfo/.bash_profile
 
 WORKDIR /home/wphdtfo
 
-RUN ln -s WPHDTFOUI/etc && chown -h wphdtfo:web etc && \
-    ln -s WPHDTFOUI/var && chown -h wphdtfo:web var
+RUN mkdir -p /home/wphdtfo/var/apache && \
+    chown -R wphdtfo:web /home/wphdtfo/var
+
+RUN ln -s WPHDTFOUI/etc && chown -h wphdtfo:web etc
 
 USER wphdtfo
 
 EXPOSE 10091
+
+RUN yum clean all && \
+    rm -rf /tmp/*
 
 WORKDIR /home/wphdtfo

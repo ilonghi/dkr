@@ -2,11 +2,17 @@
 
 FROM ilonghi/perl:1.1.0
 
-# FIXME: mutt va spostato in un'immagine precedente
 RUN yum -y update && \
     yum -y install \
       which \
       mutt
+
+# FIXME: mutt non funziona!
+
+RUN cp /usr/share/i18n/locales/it_IT /tmp/it_IT.src && \
+    mkdir /usr/lib/locale/it_IT.utf8 && \
+    localedef -c -i /tmp/it_IT.src -f UTF-8 /usr/lib/locale/it_IT.utf8/ && \
+    rm /tmp/it_IT.src
 
 COPY ./tnsnames.ora /usr/lib/oracle/12.2/client64/network/admin/tnsnames.ora
 
@@ -25,11 +31,22 @@ WORKDIR /home/wphdtfows
 RUN ln -s WPHDTFO/etc && chown -h wphdtfows:web etc && \
     ln -s WPHDTFO/share && chown -h wphdtfows:web share && \
     ln -s WPHDTFO/bin && chown -h wphdtfows:web bin && \
-    ln -s WPHDTFO/tmp && chown -h wphdtfows:web tmp && \
-    ln -s WPHDTFO/var && chown -h wphdtfows:web var && \
+    ln -s /tmp && chown -h wphdtfows:web tmp && \
     ln -s COM/share/www/ARTLEGACY ARTNEW && chown -h wphdtfows:web ARTNEW && \
     ln -s ARTNEW ART && chown -h wphdtfows:web ART
 
+RUN mkdir /home/wphdtfows/var && \
+    mkdir /home/wphdtfows/var/apache && \
+    mkdir /home/wphdtfows/var/apache/session && \
+    mkdir /home/wphdtfows/var/apache/session/ARTLEGACY && \
+    mkdir /home/wphdtfows/var/apache/session/IVR && \
+    mkdir /home/wphdtfows/var/art_repository && \
+    mkdir /home/wphdtfows/var/repository && \
+    chown -R wphdtfows:web /home/wphdtfows/var
+
 USER wphdtfows
+
+RUN yum clean all && \
+    rm -rf /tmp/*
 
 WORKDIR /home/wphdtfows

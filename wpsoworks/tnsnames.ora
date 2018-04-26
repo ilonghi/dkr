@@ -1,9 +1,0 @@
-PENFTTHWORKS =
-  (DESCRIPTION =
-    (ADDRESS = (PROTOCOL = TCP)(HOST = dbserver)(PORT = 1521))
-    (CONNECT_DATA =
-      (SERVER = DEDICATED)
-      (SERVICE_NAME = XE)
-    )
-  )
-

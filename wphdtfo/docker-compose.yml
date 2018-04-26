@@ -9,7 +9,7 @@ services:
   wphdtfo-web-proxy:
     image: ilonghi/wphdtfo-web-proxy:0.0.1
     volumes:
-      - /home/ivan/dev/docker/wphdtfo/wphdtfo-web-proxy/httpd_conf_custom:/usr/local/apache/conf/custom
+      - ./wphdtfo-web-proxy/httpd_conf_custom:/usr/local/apache/conf/custom
     ports:
       - 80:80
     hostname: wphdtfo-web-proxy
@@ -24,9 +24,10 @@ services:
       context: .
     image: ilonghi/wphdtfows-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
     hostname: wphdtfows-web-wsart-01
     container_name: wphdtfows-web-wsart-01
     networks:
@@ -45,9 +46,10 @@ services:
       context: .
     image: ilonghi/wphdtfows-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
     hostname: wphdtfows-web-wsart-02
     container_name: wphdtfows-web-wsart-02
     networks:
@@ -66,9 +68,8 @@ services:
       context: .
     image: ilonghi/wphdtfoui-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI
-      - /home/ivan/dev/COM:/home/wphdtfo/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var
+      - ./WPHDTFOUI:/home/wphdtfo/WPHDTFOUI
+      - ./COM:/home/wphdtfo/COM
     hostname: wphdtfoui-web-restart-01
     container_name: wphdtfoui-web-restart-01
     networks:
@@ -85,9 +86,8 @@ services:
       context: .
     image: ilonghi/wphdtfoui-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart:/home/wphdtfo/WPHDTFOUI
-      - /home/ivan/dev/COM:/home/wphdtfo/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfo/var:/home/wphdtfo/WPHDTFOUI/var
+      - ./WPHDTFOUI:/home/wphdtfo/WPHDTFOUI
+      - ./COM:/home/wphdtfo/COM
     hostname: wphdtfoui-web-restart-02
     container_name: wphdtfoui-web-restart-02
     networks:
@@ -104,9 +104,11 @@ services:
       context: .
     image: ilonghi/wphdtfows-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+      - wphdtfo-session-ivr:/home/wphdtfows/var/apache/session/IVR
     hostname: wphdtfows-web-ivr-01
     container_name: wphdtfows-web-ivr-01
     networks:
@@ -123,9 +125,11 @@ services:
       context: .
     image: ilonghi/wphdtfows-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+      - wphdtfo-session-ivr:/home/wphdtfows/var/apache/session/IVR
     hostname: wphdtfows-web-ivr-02
     container_name: wphdtfows-web-ivr-02
     networks:
@@ -142,9 +146,11 @@ services:
       context: .
     image: ilonghi/wphdtfows-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+      - wphdtfo-session-artlegacy:/home/wphdtfows/var/apache/session/ARTLEGACY
     hostname: wphdtfows-web-artlegacy-01
     container_name: wphdtfows-web-artlegacy-01
     networks:
@@ -161,9 +167,11 @@ services:
       context: .
     image: ilonghi/wphdtfows-web:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+      - wphdtfo-session-artlegacy:/home/wphdtfows/var/apache/session/ARTLEGACY
     hostname: wphdtfows-web-artlegacy-02
     container_name: wphdtfows-web-artlegacy-02
     networks:
@@ -174,15 +182,25 @@ services:
       - /home/wphdtfows/WPHDTFO/etc/httpd.ARTLEGACY.conf
       - -F
       - start
+  wphdtfo-web-phpmemcachedadmin:
+    build:
+      dockerfile: Dockerfile.wphdtfo-web-phpmemcachedadmin
+      context: .
+    image: ilonghi/wphdtfo-web-phpmemcachedadmin:0.0.1
+    hostname: wphdtfo-web-phpmemcachedadmin
+    container_name: wphdtfo-web-phpmemcachedadmin
+    networks:
+      - wphdtfo-net
   wphdtfows-oss-daemon-um:
     build:
       dockerfile: Dockerfile.wphdtfows-oss
       context: .
     image: ilonghi/wphdtfows-oss:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
     hostname: wphdtfows-oss
     container_name: wphdtfows-oss-daemon-um
     networks:
@@ -190,9 +208,59 @@ services:
     command:
       - /bin/bash
       - -c
-      - source ~/.bash_profile; exec users_management --log-config=$${COM}/etc/users_management.log4perl.conf --driver=API::ART::Driver::Users::JSON --oFile=$${ETC}/users.json --camelize-names --manage=C --manage=U --manage=D --notify-email=$${MAILADDR_BG} --daemon=30 --transaction-mode=c
+      - source ~/.bash_profile; exec users_management --log-config=$${COM}/etc/users_management.docker.log4perl.conf --driver=API::ART::Driver::Users::JSON --oFile=$${ETC}/users.json --camelize-names --manage=C --manage=U --manage=D --notify-email=$${MAILADDR_BG} --daemon=30 --transaction-mode=c
+  wphdtfows-oss-daemon-ac:
+    build:
+      dockerfile: Dockerfile.wphdtfows-oss
+      context: .
+    image: ilonghi/wphdtfows-oss:0.0.1
+    volumes:
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+    hostname: wphdtfows-oss
+    container_name: wphdtfows-oss-daemon-ac
+    networks:
+      - wphdtfo-net
+    command:
+      - /bin/bash
+      - -c
+      - source ~/.bash_profile; exec activity_count --daemon=30
+  wphdtfows-oss-daemon-aes:
+    build:
+      dockerfile: Dockerfile.wphdtfows-oss
+      context: .
+    image: ilonghi/wphdtfows-oss:0.0.1
+    volumes:
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+    hostname: wphdtfows-oss
+    container_name: wphdtfows-oss-daemon-aes
+    networks:
+      - wphdtfo-net
+    command:
+      - /bin/bash
+      - -c
+      - source ~/.bash_profile; exec ramq --no-lock-file --log-config=$${COM}/etc/ramq.docker.log4perl.conf --daemon=30 --transaction-mode=c $${COM}/etc/ramq/API_ART/EmailService/ramq.conf
 
 networks:
   wphdtfo-net:
     external:
       name: wphdtfo-net
+
+volumes:
+  wphdtfo-art-repository-dsk:
+    external: true
+    name: wphdtfo-art-repository-dsk
+  wphdtfo-repository-dsk:
+    external: true
+    name: wphdtfo-repository-dsk
+  wphdtfo-session-ivr:
+    external: true
+    name: wphdtfo-session-ivr
+  wphdtfo-session-artlegacy:
+    external: true
+    name: wphdtfo-session-artlegacy

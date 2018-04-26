@@ -1,33 +1,17 @@
 version: '3.6'
 services:
-  wphdtfows-oss-sau-01:
+  wphdtfows-oss-sau:
     build:
       dockerfile: Dockerfile.wphdtfows-oss
       context: .
     image: ilonghi/wphdtfows-oss:0.0.1
     volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
-    hostname: wphdtfows-web-wsart-01
-    container_name: wphdtfows-oss-sau-01
-    networks:
-      - wphdtfo-net
-    command:
-      - /bin/bash
-      - -c
-      - source ~/.bash_profile; session_audit_upload.sh -n
-  wphdtfows-oss-sau-02:
-    build:
-      dockerfile: Dockerfile.wphdtfows-oss
-      context: .
-    image: ilonghi/wphdtfows-oss:0.0.1
-    volumes:
-      - /home/ivan/dev/hdtfo-restart-ws:/home/wphdtfows/WPHDTFO
-      - /home/ivan/dev/COM:/home/wphdtfows/COM
-      - /home/ivan/dev/docker/wphdtfo/fs_repo_wphdtfo/wphdtfows/var:/home/wphdtfows/WPHDTFO/var
-    hostname: wphdtfows-web-wsart-02
-    container_name: wphdtfows-oss-sau-02
+      - ./WPHDTFO:/home/wphdtfows/WPHDTFO
+      - ./COM:/home/wphdtfows/COM
+      - wphdtfo-art-repository-dsk:/home/wphdtfows/var/art_repository
+      - wphdtfo-repository-dsk:/home/wphdtfows/var/repository
+    hostname: wphdtfows-oss
+    container_name: wphdtfows-oss-sau
     networks:
       - wphdtfo-net
     command:
@@ -39,3 +23,11 @@ networks:
   wphdtfo-net:
     external:
       name: wphdtfo-net
+
+volumes:
+  wphdtfo-art-repository-dsk:
+    external: true
+    name: wphdtfo-art-repository-dsk
+  wphdtfo-repository-dsk:
+    external: true
+    name: wphdtfo-repository-dsk

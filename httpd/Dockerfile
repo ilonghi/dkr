@@ -30,4 +30,7 @@ RUN curl -SL http://mirror.nohup.it/apache/httpd/httpd-2.4.29.tar.gz -o httpd-2.
     cd .. && \
     rm -rf httpd-2.4.29.tar.gz httpd-2.4.29
 
+RUN yum clean all && \
+    rm -rf /tmp/*
+
 WORKDIR /

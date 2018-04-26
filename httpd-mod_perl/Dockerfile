@@ -54,4 +54,7 @@ RUN mkdir /usr/local/BerkeleyDB && \
     ln -s /usr/lib64/libdb4 lib && \
     cpanm DB_File
 
+RUN yum clean all && \
+    rm -rf /tmp/*
+
 WORKDIR /

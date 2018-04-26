@@ -1,6 +1,6 @@
 PWPRETELIT =
   (DESCRIPTION =
-    (ADDRESS = (PROTOCOL = TCP)(HOST = oracle-server)(PORT = 1521))
+    (ADDRESS = (PROTOCOL = TCP)(HOST = apu.simpsons.fake)(PORT = 1521))
     (CONNECT_DATA =
       (SERVER = DEDICATED)
       (SERVICE_NAME = XE)

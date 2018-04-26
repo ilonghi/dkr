@@ -1,0 +1,20 @@
+# docker build -f Dockerfile.wphdtfo-web-phpmemcachedadmin -t ilonghi/wphdtfo-web-phpmemcachedadmin:0.0.1 .
+
+FROM php:7.2.4-apache-stretch
+
+WORKDIR /var/www/html
+
+RUN curl -SL https://github.com/elijaa/phpmemcachedadmin/archive/1.3.0.tar.gz -o 1.3.0.tar.gz && \
+    tar zxf 1.3.0.tar.gz && \
+    ln -s phpmemcachedadmin-1.3.0 wphdtfophpmemcachedadmin && \
+    rm 1.3.0.tar.gz
+
+COPY ./wphdtfo-web-phpmemcachedadmin/Memcache.php /var/www/html/wphdtfophpmemcachedadmin/Config/Memcache.php
+
+RUN chown www-data:www-data \
+      /var/www/html/wphdtfophpmemcachedadmin/Temp \
+      /var/www/html/wphdtfophpmemcachedadmin/Config/Memcache.php
+
+RUN echo '<?php header("Location: ./wphdtfophpmemcachedadmin/"); ?>' > /var/www/html/index.php
+
+RUN rm -rf /tmp/*

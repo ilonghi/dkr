@@ -17,4 +17,6 @@ RUN chmod +x /usr/local/bin/httpd-foreground
 
 EXPOSE 80 443
 
+RUN rm -rf /tmp/*
+
 # CMD ["httpd-foreground"]

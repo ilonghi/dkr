@@ -8,9 +8,8 @@ RUN yum -y update && \
       make \
       gcc \
       openssl \
-      openssl-devel
-
-# FIXME: installare mutt
+      openssl-devel \
+      mutt
 
 WORKDIR /usr/local/src
 
@@ -18,8 +17,8 @@ RUN curl -SL http://www.cpan.org/src/5.0/perl-5.26.1.tar.gz -o perl-5.26.1.tar.g
     tar xzf perl-5.26.1.tar.gz && \
     cd perl-5.26.1 && \
     CFLAGS='-m64 -mtune=nocona' ./Configure -Duse64bitall -Duseithreads -des -A ccflags=-fPIC && \
-    make && \
-    make test_harness && \
+    make -j$(nproc) && \
+    TEST_JOBS=$(nproc) make test_harness && \
     make install && \
     cd .. && \
     rm -rf perl-5.26.1.tar.gz perl-5.26.1
@@ -51,7 +50,8 @@ RUN cpanm \
       MIME::Base32 \
       Log::Dispatch::Screen \
       CGI \
-      File::CacheDir
+      File::CacheDir \
+      Email::Stuffer
 
 RUN curl -SL https://cpan.metacpan.org/authors/id/P/PY/PYTHIAN/DBD-Oracle-1.74.tar.gz -o DBD-Oracle-1.74.tar.gz && \
     tar zxf DBD-Oracle-1.74.tar.gz && \
@@ -69,5 +69,8 @@ RUN cpanm --installdeps Dancer2@0.160000 && \
 # FIXME
 # RUN yum -y install clamav-server
 # RUN cpanm File::Scan::ClamAV
+
+RUN yum clean all && \
+    rm -rf /tmp/*
 
 WORKDIR /
