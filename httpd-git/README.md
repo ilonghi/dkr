@@ -14,16 +14,6 @@ docker build -t ilonghi/httpd-git:0.0.1 .
 docker volume create httpd-git-dsk
 ```
 
-## Create empty httpd password file
-
-```
-docker run -ti --rm \
-  -v httpd-git-dsk:/usr/local/apache2/htdocs/git \
-  --env APACHE_GIT_HOST=$(ifconfig docker0 | grep 'inet addr' | sed -r 's/.*inet addr:([^ ]+) .*/\1/'):10090 \
-  ilonghi/httpd-git:0.0.1 \
-  create-repository.sh test.git
-```
-
 ## Run the container
 
 ```
