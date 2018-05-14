@@ -10,6 +10,4 @@ COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
 COPY ./create-repository.sh /usr/local/bin/create-repository.sh
 
 RUN mkdir -p /usr/local/apache2/htdocs/git && \
-  chown www-data:www-data /usr/local/apache2/htdocs/git && \
-  mkdir /usr/local/etc && \
-  touch /usr/local/etc/git-passwd
+  chown www-data:www-data /usr/local/apache2/htdocs/git
